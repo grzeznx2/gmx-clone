@@ -5,10 +5,13 @@ contract Vault {
 
     // error messages to be replaced later
     uint256 public error1;
-
     mapping(uint256 => string) public errors;
+
     address public errorController;
     address public gov;
+
+    address[] public allWhitelistedTokens;
+    mapping (address => bool) whitelistedTokens;
 
     constructor(){
         gov = msg.sender;
@@ -22,6 +25,10 @@ contract Vault {
     function setError(uint256 _errorCode, string calldata _error) external {
         require(msg.sender == errorController, "Vault: invalid errorController");
         errors[_errorCode] = _error;
+    }
+
+    function allWhitelistedTokensLength() external view returns(uint256){
+        return allWhitelistedTokens.length;
     }
 
     function _onlyGov() private view {
