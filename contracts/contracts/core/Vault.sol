@@ -14,6 +14,11 @@ contract Vault {
         gov = msg.sender;
     }
 
+    function setErrorController(address _errorController) external {
+        _onlyGov();
+        errorController = _errorController;
+    }
+
     function setError(uint256 _errorCode, string calldata _error) external {
         require(msg.sender == errorController, "Vault: invalid errorController");
         errors[_errorCode] = _error;
