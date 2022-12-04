@@ -58,6 +58,31 @@ contract Vault {
         inManagerMode = _inManagerMode;
     }
 
+    function setFees(
+        uint256 _taxBasisPoints,
+        uint256 _stableTaxBasisPoints,
+        uint256 _mintBurnFeeBasisPoints,
+        uint256 _swapFeeBasisPoints,
+        uint256 _stableSwapFeeBasisPoints,
+        uint256 _marginFeeBasisPoints,
+        uint256 _liquidationFeeUsd
+    )   external {
+        _onlyGov();
+        _validate(_taxBasisPoints <= MAX_FEE_BASIS_POINTS, 1003);
+        _validate(_stableTaxBasisPoints <= MAX_FEE_BASIS_POINTS, 1004);
+        _validate(_mintBurnFeeBasisPoints <= MAX_FEE_BASIS_POINTS, 1005);
+        _validate(_swapFeeBasisPoints <= MAX_FEE_BASIS_POINTS, 1006);
+        _validate(_stableSwapFeeBasisPoints <= MAX_FEE_BASIS_POINTS, 1007);
+        _validate(_marginFeeBasisPoints <= MAX_FEE_BASIS_POINTS, 1008);
+        _validate(_liquidationFeeUsd <= MAX_LIQUIDATION_FEE_USD, 1009);
+        taxBasisPoints = _taxBasisPoints;
+        stableTaxBasisPoints = _stableTaxBasisPoints;
+        mintBurnFeeBasisPoints = _mintBurnFeeBasisPoints;
+        swapFeeBasisPoints = _swapFeeBasisPoints;
+        stableSwapFeeBasisPoints = _stableSwapFeeBasisPoints;
+        marginFeeBasisPoints = _marginFeeBasisPoints;
+    }
+
     function _onlyGov() private view {
         _validate(msg.sender == gov, 1001);
     }
