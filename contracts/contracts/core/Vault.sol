@@ -3,15 +3,15 @@ pragma solidity ^0.8.9;
 
 contract Vault {
 
-    // error messages to be replaced later
-    uint256 public error1;
     mapping(uint256 => string) public errors;
 
     address public errorController;
     address public gov;
 
     address[] public allWhitelistedTokens;
-    mapping (address => bool) whitelistedTokens;
+    mapping (address => bool) public whitelistedTokens;
+    mapping (address => bool ) public managers;
+    bool public inManagerMode = false;
 
     constructor(){
         gov = msg.sender;
@@ -31,11 +31,26 @@ contract Vault {
         return allWhitelistedTokens.length;
     }
 
+    function setManager(address _manager, bool _isManager) external {
+        _onlyGov();
+        managers[_manager] = _isManager;
+    }
+
+    function setInManagerMode(bool _inManagerMode) external {
+        inManagerMode = _inManagerMode;
+    }
+
     function _onlyGov() private view {
-        _validate(msg.sender == gov, error1);
+        _validate(msg.sender == gov, 1001);
     }
 
     function _validate(bool _condition, uint256 _errorCode) private view {
         require(_condition, errors[_errorCode]);
+    }
+
+    function _validateManager() private view {
+        if(inManagerMode){
+            _validate(managers[msg.sender], 1002);
+        }
     }
 }
