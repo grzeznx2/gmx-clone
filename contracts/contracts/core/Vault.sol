@@ -3,6 +3,16 @@ pragma solidity ^0.8.9;
 
 contract Vault {
 
+    uint256 public constant BASIS_POINTS_DIVISOR = 10000;
+    uint256 public constant FUNDING_RATE_PRECISION = 1000000;
+    uint256 public constant PRICE_PRECISION = 10 ** 30;
+    uint256 public constant MIN_LEVERAGE = 10000; // 1x
+    uint256 public constant USDG_DECIMALS = 18;
+    uint256 public constant MAX_FEE_BASIS_POINTS = 500; // 5%
+    uint256 public constant MAX_LIQUIDATION_FEE_USD = 100 * PRICE_PRECISION; // 100 USD
+    uint256 public constant MIN_FUNDING_RATE_INTERVAL = 1 hours;
+    uint256 public constant MAX_FUNDING_RATE_FACTOR = 10000; // 1%
+
     mapping(uint256 => string) public errors;
 
     address public errorController;
