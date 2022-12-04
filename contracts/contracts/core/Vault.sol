@@ -13,6 +13,14 @@ contract Vault {
     uint256 public constant MIN_FUNDING_RATE_INTERVAL = 1 hours;
     uint256 public constant MAX_FUNDING_RATE_FACTOR = 10000; // 1%
 
+    uint256 public liquidationFeeUsd;
+    uint256 public taxBasisPoints = 50; // 0.5%
+    uint256 public stableTaxBasisPoints = 20; // 0.2%
+    uint256 public mintBurnFeeBasisPoints = 30; // 0.3%
+    uint256 public swapFeeBasisPoints = 30; // 0.3%
+    uint256 public stableSwapFeeBasisPoints = 4; // 0.04%
+    uint256 public marginFeeBasisPoints = 10; // 0.1%
+
     mapping(uint256 => string) public errors;
 
     address public errorController;
