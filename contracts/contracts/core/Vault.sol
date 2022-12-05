@@ -21,6 +21,11 @@ contract Vault {
     uint256 public stableSwapFeeBasisPoints = 4; // 0.04%
     uint256 public marginFeeBasisPoints = 10; // 0.1%
 
+    uint256 public fundingInterval = 8 hours;
+    uint256 public fundingRateFactor;
+    uint256 public stableFundingRateFactor;
+    uint256 public totalTokenWeights;
+
     mapping(uint256 => string) public errors;
 
     address public errorController;
@@ -82,6 +87,8 @@ contract Vault {
         stableSwapFeeBasisPoints = _stableSwapFeeBasisPoints;
         marginFeeBasisPoints = _marginFeeBasisPoints;
     }
+
+
 
     function _onlyGov() private view {
         _validate(msg.sender == gov, 1001);
