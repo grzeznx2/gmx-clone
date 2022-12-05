@@ -88,7 +88,15 @@ contract Vault {
         marginFeeBasisPoints = _marginFeeBasisPoints;
     }
 
-
+    function setFundingRate(uint256 _fundingInterval, uint256 _fundingRateFactor, uint256 _stableFundingRateFactor) external {
+        _onlyGov();
+        _validate(_fundingInterval >= MIN_FUNDING_RATE_INTERVAL, 1010);
+        _validate(_fundingRateFactor <= MAX_FUNDING_RATE_FACTOR, 1010);
+        _validate(_stableFundingRateFactor <= MAX_FUNDING_RATE_FACTOR, 1010);
+        fundingInterval = _fundingInterval;
+        fundingRateFactor = _fundingRateFactor;
+        stableFundingRateFactor = _stableFundingRateFactor;
+    }
 
     function _onlyGov() private view {
         _validate(msg.sender == gov, 1001);
