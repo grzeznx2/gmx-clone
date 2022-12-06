@@ -3,6 +3,16 @@ pragma solidity ^0.8.9;
 
 contract Vault {
 
+    struct Position {
+        uint256 size;
+        uint256 collateral;
+        uint256 averagePrice;
+        uint256 entryFundingRate;
+        uint256 reserveAmount;
+        int256 realisedPnl;
+        uint256 lastIncreasedTime;
+    }
+
     uint256 public constant BASIS_POINTS_DIVISOR = 10000;
     uint256 public constant FUNDING_RATE_PRECISION = 1000000;
     uint256 public constant PRICE_PRECISION = 10 ** 30;
